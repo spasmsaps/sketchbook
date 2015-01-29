@@ -14,7 +14,11 @@ function setup() {
 function draw() {
   background(255);
   resolveCircleIntersection();
+  stroke(127);
+  strokeWeight(1);
   drawNodes();
+  stroke(25);
+  strokeWeight(3);
   relativeNeighbors();
 }
 
@@ -29,8 +33,6 @@ function generate() {
 }
 
 function drawNodes() {
-  stroke(127);
-  strokeWeight(1);
   for (var i = 0; i < n; i++) {
     ellipse(a[i].x, a[i].y, d, d);
   }
@@ -57,16 +59,13 @@ function resolveCircleIntersection() {
 }
 
 function relativeNeighbors() {
-  stroke(25);
-  strokeWeight(3);
   var i, j, k;
   for (i = 0; i < n; i++) {
     for (j = i + 1; j < n; j++) {
       var dij = dist(a[j].x, a[j].y, a[i].x, a[i].y);
       for (k = 0; k < n; k++) {
         if ((k != i) && (k != j)) {
-          if (dist(a[k].x, a[k].y, a[i].x, a[i].y) < dij &&
-            dist(a[k].x, a[k].y, a[j].x, a[j].y) < dij) {
+          if (dist(a[k].x, a[k].y, a[i].x, a[i].y) < dij && dist(a[k].x, a[k].y, a[j].x, a[j].y) < dij) {
             break;
           }
         }
