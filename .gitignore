@@ -2,3 +2,5 @@
 *~
 .directory
 .Trash-*
+#Cloud9 IDE
+.c9/
