@@ -1,25 +1,26 @@
 /* p5js tag v0.4.4 */
+
 var d = 24;
 var n = 128;
 var a = new Array(n);
+var w2, h2;
 
 function setup() {
   var canvas = createCanvas(700, 700);
   canvas.parent('sketchContainer');
   frameRate(30);
-  noFill();
+  fill('white');
+  stroke('black');
+  w2 = width * .5;
+  h2 = height * .5;
   generate();
 }
 
 function draw() {
-  background(255);
   resolveCircleIntersection();
-  stroke(127);
-  strokeWeight(1);
-  drawNodes();
-  stroke(25);
-  strokeWeight(3);
+  background('white');
   relativeNeighbors();
+  drawNodes();
 }
 
 function mousePressed() {
@@ -28,13 +29,14 @@ function mousePressed() {
 
 function generate() {
   for (var i = 0; i < n; i++) {
-    a[i] = createVector(random(d * 5, width - d * 5), random(d * 5, height - d * 5), d);
+    a[i] = createVector(w2 + random(-d, d), h2 + random(-d, d), random(d * 0.666, d));
   }
 }
 
 function drawNodes() {
   for (var i = 0; i < n; i++) {
-    ellipse(a[i].x, a[i].y, d, d);
+    strokeWeight(a[i].z * .11618);
+    ellipse(a[i].x, a[i].y, a[i].z, a[i].z);
   }
 }
 
@@ -71,6 +73,7 @@ function relativeNeighbors() {
         }
       }
       if (k == n) {
+        strokeWeight((a[j].z + a[i].z) * .1);
         line(a[j].x, a[j].y, a[i].x, a[i].y);
       }
     }
