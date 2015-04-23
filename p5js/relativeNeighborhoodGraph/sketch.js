@@ -24,7 +24,10 @@ function draw() {
 }
 
 function mousePressed() {
-  generate();
+  if(mouseButton === LEFT && mouseX >= 0 && mouseY >= 0 && mouseX <= width && mouseY <= height) {
+    generate();
+    return false; // prevent any default behavior from the browser
+  }
 }
 
 function generate() {
