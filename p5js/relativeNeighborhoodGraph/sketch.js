@@ -1,4 +1,4 @@
-/* p5js tag v0.4.4 */
+/* using p5js tag v0.4.4 */
 
 var d = 24;
 var n = 128;
@@ -8,7 +8,7 @@ var w2, h2;
 function setup() {
   var canvas = createCanvas(700, 700);
   canvas.parent('sketchContainer');
-  frameRate(30);
+  frameRate(30); // don't starve the browser
   fill('white');
   stroke('black');
   w2 = width * .5;
@@ -32,7 +32,7 @@ function mousePressed() {
 
 function generate() {
   for (var i = 0; i < n; i++) {
-    a[i] = createVector(w2 + random(-d, d), h2 + random(-d, d), random(d * 0.666, d));
+    a[i] = createVector(w2 + random(-d, d), h2 + random(-d, d), random(d * .666, d));
   }
 }
 
@@ -51,10 +51,10 @@ function resolveCircleIntersection() {
         var y = a[j].y - a[i].y;
         var r = a[j].z + a[i].z;
         var s = sq(x) + sq(y);
-        if (s < sq(r) - 0.001) {
+        if (s < sq(r) - .001) {
           var v = createVector(x, y);
           v.normalize();
-          v.mult((r - sqrt(s)) * 0.5);
+          v.mult((r - sqrt(s)) * .5);
           a[i].sub(v);
           a[j].add(v);
         }
@@ -64,11 +64,10 @@ function resolveCircleIntersection() {
 }
 
 function relativeNeighbors() {
-  var i, j, k;
-  for (i = 0; i < n; i++) {
-    for (j = i + 1; j < n; j++) {
+  for (var i = 0; i < n; i++) {
+    for (var j = i + 1; j < n; j++) {
       var dij = dist(a[j].x, a[j].y, a[i].x, a[i].y);
-      for (k = 0; k < n; k++) {
+      for (var k = 0; k < n; k++) {
         if ((k != i) && (k != j)) {
           if (dist(a[k].x, a[k].y, a[i].x, a[i].y) < dij && dist(a[k].x, a[k].y, a[j].x, a[j].y) < dij) {
             break;
